@@ -1,25 +1,65 @@
----
-# Nome do arquivo PDF gerado na pasta resultado
-output-file: "Entrega 1 - Gustavo"
+
 ---
 
-```{r setup}
-#| include: false
-source("rdocs/entrega_1.R")
+output-file: "entrega_1"
+---
+
+```{r setup, include=FALSE}
+arquivo <- "C:/Users/Usuario/Downloads/relatorio_old_town_road.xlsx"
+
+vendas <- read_excel(arquivo, sheet = "relatorio_vendas")
+infos_vendas <- read_excel(arquivo, sheet = "infos_vendas")
+produtos <- read_excel(arquivo, sheet = "infos_produtos")
+lojas <- read_excel(arquivo, sheet = "infos_lojas")
+
+
+#Analise 1
+
+dados_completos <- vendas %>%
+  left_join(infos_vendas, by = c("SaleID" = "Sal3ID")) %>%
+  left_join(produtos, by = c("ItemID" = "Ite3ID")) %>%
+  left_join(lojas, by = c("StoreID" = "Stor3ID"))
+
+dados_completos <- dados_completos %>%
+  mutate(
+    Ano = as.numeric(format(as.Date(Date), "%Y")),
+    Receita_USD = Quantity * UnityPrice,
+    Receita_BRL = Receita_USD * 5.31
+  )
+
+dados_periodo <- dados_completos %>%
+  filter(Ano >= 1880 & Ano <= 1889)
+
+receita_media_ano <- dados_periodo %>%
+  group_by(Ano) %>%
+  summarise(Receita_Media = mean(Receita_BRL, na.rm = TRUE))
 ```
 
-# Análises
 
-## Análise tal
-
-Introdução da análise
-
-```{r}
-#| label: fig-g1
-#| fig-cap: "Gráfico de barras teste "
-g1
+```{r setup, include=FALSE}
+ggplot(receita_media, aes(x = Ano, y = Receita_Media_BRL)) +
+  geom_line(color = "#0072B2", size = 1.2) +
+  geom_point(color = "#D55E00", size = 3) +
+  labs(
+    title = "Receita média das lojas por ano (1880–1889)",
+    subtitle = "Valores convertidos para reais (R$)",
+    x = "Ano",
+    y = "Receita média por loja (R$)"
+  ) +
+  theme_minimal(base_size = 13)
 ```
 
-descritiva $\ref{fig-g1}$ volta pra figura
+
+```{r setup, include=FALSE}
+
+
+###Análise
+
+A análise da **receita média anual das lojas** entre os anos de **1880 e 1889** 
+
+Os dados indicam que houve **variações no faturamento médio** ao longo da década. Nota-se uma **tendência de crescimento gradual**, sugerindo que o mercado apresentou **expansão moderada**, com alguns períodos de estabilidade. Esse aumento pode estar relacionado a fatores como a **maior consolidação das lojas**, **incremento nas vendas** e **melhoria na eficiência operacional**.
+
+
+
 
 

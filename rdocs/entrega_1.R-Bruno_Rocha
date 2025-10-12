@@ -22,7 +22,7 @@ source("rdocs/source/packages.R")
 # de teste depreciados, ou ao menos deixando como comentário. Dê preferência
 # as funções dos pacotes contidos no Tidyverse para realizar suas análises.
 # ---------------------------------------------------------------------------- #
-
+<<<<<<< Updated upstream
 
 ##Análise 1
 
@@ -41,6 +41,17 @@ g1 <- ggplot(mpg) +
 print_quadro_resumo(variavel)
 
 
+
+
+
+
+
+
+
+
+
+
+=======
 arquivo <- "C:/Users/Usuario/Downloads/relatorio_old_town_road.xlsx"
 
 dados <- read_excel(arquivo, sheet = "relatorio_vendas")
@@ -102,4 +113,4 @@ ggplot(receita_media, aes(x = Ano, y = Receita_Media_BRL)) +
   theme_minimal(base_size = 13)
 
 write_xlsx(receita_media, "receita_media_1880_1889.xlsx")
-
+>>>>>>> Stashed changes
