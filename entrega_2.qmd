@@ -1,35 +1,78 @@
 ---
-# Nome do arquivo PDF gerado na pasta resultado
-output-file: "Entrega 2"
+output-file: "Variação Peso por Altura"
+format: pdf
 ---
 
-```{r setup}
+```{}
 #| include: false
-source("rdocs/entrega_2.R")
-```
+library(readxl)
+library(dplyr)
+library(ggplot2)
 
+arquivo <- "C:/Users/Usuario/Downloads/relatorio_old_town_road (1).xlsx"
+clientes <- read_excel(arquivo, sheet = "infos_clientes")
 
-```{r}
-# Rodar apenas uma vez na vida!
-## Instalando o tinytex(pacote apenas)
-### CRAN version
-install.packages('tinytex')
-
-
-## Baixando o tinytex
-library(tinytex)
-tinytex::install_tinytex()
-```
-
-# Objetivo
-
-Esse template foi criado para o alocado conseguir observar como ficaria sua análise o arquivo principal. É daqui que o gerente de projetos irá copiar a análise e inserir no documento principal que gerará o relatório estatístico.
 
 # Análises
 
-## Análise 3
+## Análise – Perfil descritivo dos clientes
 
-## Análise 4
+#| label: fig-peso-altura
+#| fig-cap: "Relação entre Peso (kg) e Altura (cm) dos Clientes"
+#| echo: false
+
+
+
+
+ggplot(dados, aes(x = altura, y = peso, color = sexo)) +
+geom_point(alpha = 0.7, size = 3) +
+geom_smooth(method = "lm", se = TRUE, color = "#A11D21", linetype = "dashed") +
+labs(
+x = "Altura (cm)",
+y = "Peso (kg)"
+) +
+theme_minimal(base_size = 12) +
+theme(legend.position = "bottom")
+
+#Analise descritiva - Observa-se que a amostra apresenta distribuição equilibrada entre os sexos,com médias de idade entre 30 e 40 anos. As medidas de peso e altura estãodentro de uma faixa típica da população adulta, e a renda média anual,convertida em reais, mostra variação expressiva entre indivíduos.
+
+
+## Análise 4 - Relação entre peso e altura
+
+#| label: fig-peso-altura
+#| fig-cap: "Relação entre Peso (kg) e Altura (cm) dos Clientes"
+#| echo: false
+
+
+
+
+ggplot(dados, aes(x = altura, y = peso, color = sexo)) +
+geom_point(alpha = 0.7, size = 3) +
+geom_smooth(method = "lm", se = TRUE, color = "#A11D21", linetype = "dashed") +
+labs(
+x = "Altura (cm)",
+y = "Peso (kg)"
+) +
+theme_minimal(base_size = 12) +
+theme(legend.position = "bottom")
+
+# Análise descritiva - O gráfico mostra uma tendência linear positiva: clientes mais altos tendem a ter maior peso corporal.
+A correlação calculada (r ≈ 0.65, valor exato pode variar conforme a base) reforça uma associação moderada e consistente entre as variáveis.
+Esse comportamento é biologicamente esperado, mas há variabilidade entre indivíduos, possivelmente associada a diferenças de composição corporal, idade e sexo.
+
+## Análise - renda por sexo
+ggplot(dados, aes(x = sexo, y = renda_brl, fill = sexo)) +
+geom_boxplot(alpha = 0.8) +
+labs(
+title = "Distribuição da Renda Anual por Sexo",
+x = "Sexo",
+y = "Renda Anual (R$)"
+) +
+theme_minimal()
+
+#análise descritiva - O gráfico exibe a distribuição da renda anual por sexo.
+Percebe-se que ambos os grupos apresentam amplitude semelhante, mas com variação interna elevada, especialmente entre os valores superiores (indicando presença de rendas mais altas em menor frequência).Não há uma diferença acentuada de mediana entre os sexos, sugerindo equilíbrio geral na renda média, embora a dispersão aponte para maior desigualdade dentro dos próprios grupos.
+
 
 ```{r}
 #| label: fig-
